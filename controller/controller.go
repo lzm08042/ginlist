@@ -37,7 +37,7 @@ func GetTodos(c *gin.Context) {
 	var todolist []*model.Todo
 	var err error
 	if todolist, err = model.FindItems(); err != nil {
-		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	} else {
 		c.JSON(http.StatusOK, todolist)
 	}
@@ -47,11 +47,11 @@ func GetTodos(c *gin.Context) {
 func GetATodo(c *gin.Context) {
 	id, ok := c.Params.Get("id")
 	if !ok {
-		c.JSON(http.StatusOK, gin.H{"error": "id无效"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "id无效"})
 		return
 	}
 	if todo, err := model.FindAItem(id); err != nil {
-		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	} else {
 		c.JSON(http.StatusOK, &todo)
 	}
