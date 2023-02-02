@@ -14,7 +14,7 @@ func SetRouter() *gin.Engine {
 	// 模板解析,去哪里找模板文件
 	// r.LoadHTMLFiles("dist/index.html", "dist/favicon.ico")
 	r.LoadHTMLGlob("dist/template/*")
-	r.GET("/", controller.GetIndex)
+	r.GET("/v1", controller.GetIndex)
 
 	v1Group := r.Group("v1")
 	{
