@@ -1,0 +1,157 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "实现一个简单的Todo List待办事项服务器",
+        "title": "Todo List API",
+        "contact": {},
+        "license": {},
+        "version": "1.0.0"
+    },
+    "host": "localhost:9090",
+    "basePath": "/",
+    "paths": {
+        "/v1":{
+            "get": {
+                "description": "进行前端界面的加载",
+                "consumes": [],
+                "produces": [
+                    "html"
+                ],
+                "summary": "界面显示",
+                "parameters": [],
+                "responses": {
+                    "200":{
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/todo": {
+            "post": {
+                "description": "前端填写事项内容，点击提交，新增一个待办事项",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "添加待办事项",
+                "parameters": [
+                    {
+                        "description": "请求添加事项的参数",
+                        "name": "reqitem",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/todoitem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "schema": {
+                            "type":"object",
+                            "properties": {
+                                "code":{
+                                    "type":"integer"
+                                },
+                                "msg":{
+                                    "type":"string"
+                                },
+                                "data":{
+                                    "$ref":"#/definitions/todoitem"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Bad Request",
+                        "schema":{         
+                            "properties": {
+                                "err":{                   
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/todo/:id": {
+            "put": {
+                "description": "修改某一事项的状态",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "修改待办事项",
+                "parameters": [
+                    {
+                        "description": "请求修改事项的参数",
+                        "name": "changeitem",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/todoitem"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/todoitem"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "删除某一事项",
+                "consumes": [],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "修改待办事项",
+                "parameters": [
+                    {
+                        "description": "请求删除事项的参数",
+                        "name": "deleteitem",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "todoitem": {
+            "type":"object",
+            "properties": {
+                "id":{
+                    "description": "事项编号",
+                    "type":"integer"
+                },
+                "title":{
+                    "description": "事项内容",
+                    "type":"integer"
+                },
+                "status":{
+                    "description": "事项状态",
+                    "type":"boolean"
+                }
+            }
+        }
+    }
+}
